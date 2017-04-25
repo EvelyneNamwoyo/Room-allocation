@@ -1,7 +1,7 @@
 import unittest
 from allocate_rooms import Dojo
 
-class TestCreateRoom(unittest.TestCase):
+class TestCreateRoomAddRoom(unittest.TestCase):
     def test_create_room_successfully(self):
         my_class_instance = Dojo()
         initial_room_count = len(my_class_instance.room_list)
