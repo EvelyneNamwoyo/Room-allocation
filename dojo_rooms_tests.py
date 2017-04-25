@@ -10,4 +10,5 @@ class TestCreateRoomAddRoom(unittest.TestCase):
         new_room_count = len(my_class_instance.room_list)
         self.assertEqual(new_room_count - initial_room_count, 1)
 if __name__ == "__main__":
-    unittest.main()
+    unittest.main()  #run main
+    print ('Program running')
