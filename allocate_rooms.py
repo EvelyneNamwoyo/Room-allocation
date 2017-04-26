@@ -1,8 +1,11 @@
 from room import OfficeSpace
 from room import LivingSpace
+from person import Staff
+from person import Fellow
 class Dojo(object):
 
     def __init__(self):
+        self.people=[]
         self.all_rooms = []
         self.rooms = []
 
@@ -23,8 +26,21 @@ class Dojo(object):
                 self.all_rooms.append(room)
 
         return self.all_rooms
-    # def add_person()
+
+
+    def add_person(self,pname,position,gender):
+        persons=[]
+        if position == 'Staff':
+            pers = Person(pname,gender)
+            persons.append(pers)
+            for i in persons.pname:
+                print (i)
+
+
+
+
 
 
 a=Dojo()
+a.add_person('eva','Staff','female')
 print (a.create_room('LivingSpace','gordy','kjj','ll'))
