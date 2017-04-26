@@ -8,22 +8,23 @@ class Dojo(object):
 
     def create_room(self, rtype, *rname):
         
-        if rtype is 'office':
+        if rtype == 'office':
             office = OfficeSpace(rname)
             self.rooms.append(office)
             tuple_rooms = office.rname
             for room in tuple_rooms:
                 self.all_rooms.append(room)
 
-        elif rtype is 'LivingSpace': 
+        elif rtype == 'LivingSpace': 
             living = LivingSpace(rname)
             self.rooms.append(living)
-            tuple_rooms = office.rname
+            tuple_rooms = living.rname
             for room in tuple_rooms:
                 self.all_rooms.append(room)
 
-        return True
+        return self.all_rooms
+    # def add_person()
 
 
 a=Dojo()
-print (a.create_room('office','gordy','kjj','ll'))
+print (a.create_room('LivingSpace','gordy','kjj','ll'))
