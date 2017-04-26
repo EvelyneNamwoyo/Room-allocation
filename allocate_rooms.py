@@ -4,7 +4,7 @@ class Dojo(object):
     def __init__(self):
         self.all_rooms = []
         self.rooms=[]
-    def create_room(self, rtype, rname):
+    def create_room(self, rtype, *rname):
         
         if rtype is 'office':
             office=OfficeSpace(rname)
@@ -20,4 +20,4 @@ class Dojo(object):
 
 
 a=Dojo()
-print (a.create_room('office','gordy'))
+print (a.create_room('office','gordy','kjj','ll'))
