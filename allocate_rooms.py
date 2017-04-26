@@ -1,22 +1,28 @@
 from room import OfficeSpace
-# from room import LivingSpace
+from room import LivingSpace
 class Dojo(object):
+
     def __init__(self):
         self.all_rooms = []
-        self.rooms=[]
+        self.rooms = []
+
     def create_room(self, rtype, *rname):
         
         if rtype is 'office':
-            office=OfficeSpace(rname)
+            office = OfficeSpace(rname)
             self.rooms.append(office)
-            self.all_rooms.append(office.rname)
-            return True
+            tuple_rooms = office.rname
+            for room in tuple_rooms:
+                self.all_rooms.append(room)
 
         elif rtype is 'LivingSpace': 
-            living=LivingSpace(rname)
+            living = LivingSpace(rname)
             self.rooms.append(living)
-            self.all_rooms.append(office.rname)
-            return True
+            tuple_rooms = office.rname
+            for room in tuple_rooms:
+                self.all_rooms.append(room)
+
+        return True
 
 
 a=Dojo()
