@@ -22,10 +22,16 @@ class TestDojo(unittest.TestCase):
         new_room_count = len(self.room.all_rooms)
         self.assertEqual(new_room_count - initial_room_count, 1)
 
-    def test_create_room_type_with_multiple_rooms_(self):
+    def test_create_room_type_with_multiple_office_rooms_(self):
         initial_room_count = len(self.room.all_rooms)
         office_rooms = self.room.create_room('office','heep','purple','green' )
         self.assertTrue(office_rooms)
+        rooms_added = len(self.room.all_rooms)
+        self.assertEqual(rooms_added - initial_room_count, 3)
+    def test_create_room_type_with_multiple_living_rooms_(self):
+        initial_room_count = len(self.room.all_rooms)
+        living_rooms = self.room.create_room('livingspace','heep','purple','green' )
+        self.assertTrue(living_rooms)
         rooms_added = len(self.room.all_rooms)
         self.assertEqual(rooms_added - initial_room_count, 3)
 
