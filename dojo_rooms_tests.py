@@ -9,10 +9,16 @@ class TestDojo(unittest.TestCase):
         self.room = Dojo()
         self.assertIsInstance(self.room, Dojo, msg='The object should be an instance of the `Dojo` class')
 
-    def test_create_room_successfully(self):
+    def test_create_room_office(self):
         initial_room_count = len(self.room.all_rooms)
         blue_office = self.room.create_room('office', 'blue')
         self.assertTrue(blue_office)
+        new_room_count = len(self.room.all_rooms)
+        self.assertEqual(new_room_count - initial_room_count, 1)
+    def test_create_room_living(self):
+        initial_room_count = len(self.room.all_rooms)
+        blue_living = self.room.create_room('livingspace', 'blue')
+        self.assertTrue(blue_living)
         new_room_count = len(self.room.all_rooms)
         self.assertEqual(new_room_count - initial_room_count, 1)
 
@@ -25,10 +31,10 @@ class TestDojo(unittest.TestCase):
 
     def test_add_person_successfully(self):
         initial_no_of_people = len(self.room.people)
-        people_add = self.room.add_person('eva','staff')
+        people_add = self.room.add_person('Staff','Staff','female')
         self.assertTrue(people_add)
         no_of_people_added = len(self.room.people)
-        self.assertEqual(no_of_people_added - initial_no_of_people,1) 
+        self.assertEqual(no_of_people_added - initial_no_of_people, 1) 
 
 
 if __name__ == "__main__":
