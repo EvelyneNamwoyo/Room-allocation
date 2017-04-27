@@ -16,20 +16,26 @@ class Dojo(object):
         self.living_rooms = []
         self.free_rooms = []
         self.people_with_rooms = {}
+        self.people_added = []
 
         """ this function creates a room of either office or living space, and appends 
         the created room to a list of rooms"""
 
     def create_room(self, rtype, *rname):
         # rtype = rtype.lower()
-
+        room_name = []
         if rtype == 'office':
             for oname in rname:
-                office = OfficeSpace(oname)
-                self.rooms.append(office)
-                print(office.rname)
-                self.office_rooms.append(office)
+                if oname in room_name:
+                    return 'Sorry office name exists'
+                else:
+                    room_name.append(oname)
+                    office = OfficeSpace(oname)
+                    self.rooms.append(office)
 
+                    print('An office called ' + office.rname +' has been successfully created!')
+
+                self.office_rooms.append(office)
         elif rtype == 'livingspace':
             for oname in rname:
                 living = LivingSpace(oname)
@@ -42,12 +48,15 @@ class Dojo(object):
 
     def add_person(self, pname, gender, position,wants_accommodation=False):
         if position == 'staff':
-            pa = Staff( pname,gender,position)
+            pa = Staff(pname, gender, position)
+            self.people_added.append(pa)
+            print(self.people_added)
             random_room = self.select_random_room(self.office_rooms)
             random_room.add_person_list(pa)
             # return random_room.people_list
             print('hahah')
-            print(position + pname + 'has been allocated ' + random_room.rname)
+            print(position + ' ' + pname + ' has been successfully added')
+            print(pname + ' has been allocated the office ' + random_room.rname)
         else:
             pa = Fellow(pname, gender)
             random_room = self.select_random_room(self.office_rooms)
@@ -55,6 +64,8 @@ class Dojo(object):
             if wants_accommodation == 'Y':
                 random_room = self.select_random_room(self.living_rooms)
                 random_room.add_person_list(pa)
+            print(position + ' ' + pname + ' has been successfully added')
+            print(pname + ' has been allocated the office ' + random_room.rname)
 
     """this function randomly selects an empty room and returns the name of the room"""
 
@@ -77,7 +88,7 @@ class Dojo(object):
             print("People in " + room.rname)
             output += 'People in ' + room.rname + '\n'
             for r in room.people_list:
-                #print (r.pname)
+                print (r.pname)
                 output += r.pname + '\n'
 
         if txt == '':
@@ -91,19 +102,10 @@ class Dojo(object):
                 # self.people_with_rooms[room.rname] = room.people_list.pname
         # print (self.people_with_rooms)
 
-
-
-
-
-
-
-
-
-
-
+# def print_unallocted(txt=''):
 
 a=Dojo()
-print (a.create_room('office', 'gordy'))
+print (a.create_room('office', 'gordy','green', 'purple'))
 # print(a.add_person('Staff', 'female', 'eva'))
 # print(a.add_person('Staff', 'female', 'ev'))
 # print(a.add_person('Staff', 'female', 'eve'))
@@ -111,7 +113,7 @@ print (a.create_room('office', 'gordy'))
 # print(a.add_person('Staff', 'female', 'Mahad'))
 # print(a.add_person('Staff', 'female', 'jack'))
 # print(a.add_person('Staff', 'female', 'had'))
-a.add_person('son', 'female', 'staff')
+a.add_person('Eva', 'female', 'staff')
 print (a.print_room('gordy'))
 print (a.print_allocations('test.txt'))
 
