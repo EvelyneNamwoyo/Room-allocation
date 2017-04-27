@@ -3,6 +3,8 @@ from room import OfficeSpace
 from room import LivingSpace
 from person import Staff
 from person import Fellow
+
+
 class Dojo(object):
 
     def __init__(self):
@@ -10,71 +12,71 @@ class Dojo(object):
         self.persons = []
         self.all_rooms = []
         self.rooms = []
-    """ this function creates a room of either office or living space, and appends the created room to a list rooms"""
+        self.office_rooms = []
+        self.living_rooms = []
+        self.free_rooms = []
+
+        """ this function creates a room of either office or living space, and appends 
+        the created room to a list of rooms"""
+
     def create_room(self, rtype, *rname):
-        if rtype == 'Office':
+        # rtype = rtype.lower()
+
+        if rtype == 'office':
             for oname in rname:
-                office = OfficeSpace(rname)
+                office = OfficeSpace(oname)
                 self.rooms.append(office)
                 print(office.rname)
-            #tuple_rooms = office.rname
-            #for room in tuple_rooms:
-                self.all_rooms.append(office)
+                self.office_rooms.append(office)
 
-        elif rtype == 'LivingSpace': 
-            living = LivingSpace(rname)
-            self.rooms.append(living)
-            tuple_rooms = living.rname
-            for room in tuple_rooms:
-                self.all_rooms.append(room)
+        elif rtype == 'livingspace':
+            for oname in rname:
+                living = LivingSpace(oname)
+                self.rooms.append(living)
+                print(living.rname)
+                self.living_rooms.append(living)
 
         return self.all_rooms
-    """This function adds a person to a room, an drandomly allocates the to availble office or space"""
+    """This function adds a person to a room, and randomly allocates the to available office space or living space"""
 
-    def add_person(self,position,gender,pname):
-        if position == 'Fellow' and self.accommodation == True:
-            pa = Fellow(pname,gender)
+    def add_person(self,position, gender, pname, wants_accommodation = False):
+        if position == 'staff':
+            pa = Staff( position, pname, gender)
+            random_room = self.select_random_room(self.office_rooms)
+            random_room.add_person_list(pa)
+            # return random_room.people_list
+            print(position + pname + 'has been allocated ' + random_room.rname )
         else:
-            pa = Staff(pname,gender)
+            pa = Fellow(pname, gender)
+            random_room = self.select_random_room(self.office_rooms)
+            random_room.add_person_list(pa)
+            if wants_accommodation == 'Y':
+                random_room = self.select_random_room(self.living_rooms)
+                random_room.add_person_list(pa)
 
-        free_rooms = []
-        for room in self.rooms:
-            if room.more_space():
-                room.add_person_list(pa)
-                for pips in room.people_list:
-                    return pips.pname
-                for i in room.rname:
-                    free_rooms.append(i)
-            a=random.choice(free_rooms)
-            print (a)
-        # print(room.people_list[0].pname)
-                # for frooms in room.rname:
-                    # free_rooms.append(frooms)
+    """this function randomly selects an empty room and returns the name of the room"""
 
-    #     
+    def select_random_room(self, room_lis):
 
-    #         return(free_rooms)
-    # def add_person(self,position,gender,pname):
-    #     if position == 'Fellow' and self.accommodation == True:
-    #             free_rooms
-                # if position == 'Fellow' and accommodation == True:
-                #     room.add_people_list(room.pname)
-                #     free_rooms.append(room.)
+        for room in room_lis:
+            if room.room_has_space():
+                self.free_rooms.append(room)
+        return random.choice(self.free_rooms)
+
+    def print_room(self, name):
+        specific_room = [room for room in self.rooms if name == room.rname][0]
+        # print(specific_room.people_list)
+        for pips in specific_room.people_list:
+            print ('haha')
+            print(pips.pname)
+
+    def print_allocations(self):
+        allocated_rooms = [room for room in self.rooms]
+        for room in allocated_rooms:
+            print(room.rname + room.pname)
 
 
-        
-        # if position == 'Staff':
-        #     pers = Staff(pname,gender)
-        #     self.persons.append(pers)
-        #     self.people.append(pers.pname)
-        # return True
-    # def allocate_room(self):
-    #     allocate={}
-    #     if self.position == 'Staff': 
-    #         for room in self.rooms:
-    #                 if room.rtype == 'Office':
-    #                     allocate[room.rname] = add_person(self,position,gender,pname)
-    #     print (allocate)
+
 
 
 
@@ -84,6 +86,16 @@ class Dojo(object):
 
 
 a=Dojo()
-print (a.create_room('Office','gordy','hh','uyt'))
-print(a.add_person('Office','female','eva'))
+print (a.create_room('office', 'gordy'))
+print(a.add_person('Staff', 'female', 'eva'))
+print(a.add_person('Staff', 'female', 'ev'))
+print(a.add_person('Staff', 'female', 'eve'))
+print(a.add_person('Staff', 'female', 'e'))
+print(a.add_person('Staff', 'female', 'Mahad'))
+print(a.add_person('Staff', 'female', 'jack'))
+print(a.add_person('Staff', 'female', 'had'))
+print(a.add_person('Staff', 'female', 'son'))
+print (a.print_room('gordy'))
+print (a.print_allocations)
+
 
