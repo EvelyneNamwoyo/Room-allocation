@@ -1,6 +1,7 @@
 import random
 from room import OfficeSpace
 from room import LivingSpace
+from room import Room
 from person import Staff
 from person import Fellow
 
@@ -17,6 +18,8 @@ class Dojo(object):
         self.free_rooms = []
         self.people_with_rooms = {}
         self.people_added = []
+        self.fellows = []
+        self.staff = []
 
         """ this function creates a room of either office or living space, and appends 
         the created room to a list of rooms"""
@@ -50,6 +53,8 @@ class Dojo(object):
         if position == 'staff':
             pa = Staff(pname, gender, position)
             self.people_added.append(pa)
+            self.staff.append(pa)
+            # check whether person has already been added
             print(self.people_added)
             random_room = self.select_random_room(self.office_rooms)
             random_room.add_person_list(pa)
@@ -59,6 +64,8 @@ class Dojo(object):
             print(pname + ' has been allocated the office ' + random_room.rname)
         else:
             pa = Fellow(pname, gender)
+            self.people_added.append(pa)
+            self.fellows.append(pa)
             random_room = self.select_random_room(self.office_rooms)
             random_room.add_person_list(pa)
             if wants_accommodation == 'Y':
@@ -101,20 +108,55 @@ class Dojo(object):
             # if len(room.people_list) > 0:
                 # self.people_with_rooms[room.rname] = room.people_list.pname
         # print (self.people_with_rooms)
+"""this functions prints the people who have been added but not yet allocated to rooms"""
+*
+    def print_unallocted(self, txt=''):
+        lis = Room()
+        a = (set(self.people_added) - set(lis.people_list))
+        new_list = list(a)
+        for i in new_list:
+            print (i.rname)
+        # for people in self.people_added:
+        #     print(people)
+        #     # if people not in people.people_list:
+        #     #     return people.pname
 
-# def print_unallocted(txt=''):
+
+    """thie function reallocates a person to a new roo"""
+    def reallocate_rooms(self, person_identifier, new_room_name):
+        # first search to see if the room to be reallocated to exists
+        rooms = []
+        new_room = None
+        for room in self.rooms:
+            rooms.append(room.rname)
+        if new_room_name.lower() not in rooms:
+            print('That room doesnt exist')
+
+        #check for extra space in new room
+        for room in self.rooms:
+            if new_room_name.lower() == room.rname:
+                new_room = room
+        if new_room.room_has_space():
+            former_room = None
+            person_name = None
+
+
+    def load_peploe(txt):
+        
+
 
 a=Dojo()
 print (a.create_room('office', 'gordy','green', 'purple'))
-# print(a.add_person('Staff', 'female', 'eva'))
-# print(a.add_person('Staff', 'female', 'ev'))
-# print(a.add_person('Staff', 'female', 'eve'))
-# print(a.add_person('Staff', 'female', 'e'))
+print(a.add_person('e', 'female', 'staff'))
+print(a.add_person('mahad', 'female', 'staff'))
+print(a.add_person('eve', 'female', 'staff'))
+print(a.add_person('ev', 'female', 'staff'))
 # print(a.add_person('Staff', 'female', 'Mahad'))
 # print(a.add_person('Staff', 'female', 'jack'))
 # print(a.add_person('Staff', 'female', 'had'))
 a.add_person('Eva', 'female', 'staff')
 print (a.print_room('gordy'))
 print (a.print_allocations('test.txt'))
+# print(a.print_allocations())
 
 
